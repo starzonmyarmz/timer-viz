@@ -1,5 +1,5 @@
 async function getMe() {
-  const response = await fetch('/me')
+  const response = await fetch('/api/me')
   const me = await response.json()
   return me
 }

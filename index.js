@@ -9,12 +9,12 @@ const router = new Router()
 
 app.use(serve('./static'))
 
-router.get('/me', async (ctx, next) => {
+router.get('/api/me', async (ctx, next) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
   ctx.body = await harvest.users.me()
 })
 
-router.get('/timers', async (ctx, next) => {
+router.get('/api/timers', async (ctx, next) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
   ctx.body = 'timers'
 })
