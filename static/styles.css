@@ -1,3 +1,9 @@
+:root {
+  --cream: #FEF9F3;
+  --orange: #E8682B;
+  --black: #1D1E1C;
+}
+
 html, body {
   margin: 0;
   padding: 0;

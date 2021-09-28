@@ -1,4 +1,18 @@
+dayjs.extend(window.dayjs_plugin_customParseFormat)
+
+const body = document.body
+const cream = getComputedStyle(body).getPropertyValue('--cream')
+const orange = getComputedStyle(body).getPropertyValue('--orange')
+const black = getComputedStyle(body).getPropertyValue('--black')
+const scale = 25
+
 const timers = []
+
+// Returns standard time as military time
+// Example: 2:00pm -> 1400
+const timeAsInt = (time) => {
+  return dayjs(time, "h:mma").format('HHmm')
+}
 
 async function getTimers() {
   const response = await fetch('/api/timers')
@@ -12,17 +26,17 @@ function setup() {
 }
 
 function draw() {
-  background('orange')
-
+  background(orange)
   getTimers().then((timers) => {
     timers.forEach((item, index) => {
+      fill(cream)
+      stroke(black)
       ellipse(
-        windowWidth / 50 * index,
-        windowHeight / 2,
-        item.hours * 50,
-        item.hours * 50
+        windowWidth / timers.length * index,
+        windowHeight / 2400 * timeAsInt(item.started_time),
+        item.hours * scale,
+        item.hours * scale
       )
     })
   })
-
 }
