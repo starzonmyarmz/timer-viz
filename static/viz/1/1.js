@@ -32,8 +32,8 @@ function draw() {
       fill(cream)
       stroke(black)
       ellipse(
-        windowWidth / timers.length * index,
-        windowHeight / 2400 * timeAsInt(item.started_time),
+        width / timers.length * index,
+        map(timeAsInt(item.started_time), 0, 2400, 0, height),
         item.hours * scale,
         item.hours * scale
       )
