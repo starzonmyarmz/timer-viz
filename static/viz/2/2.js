@@ -4,9 +4,10 @@ const body = document.body
 const cream = getComputedStyle(body).getPropertyValue('--cream')
 const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
-const scale = 25
+const scale = 50
 
-let timers, x, y, speedX, speedY, size
+let data
+let timers = []
 
 // Returns standard time as military time
 // Example: 2:00pm -> 1400
@@ -14,32 +15,53 @@ const timeAsInt = (time) => {
   return dayjs(time, "h:mma").format('HHmm')
 }
 
+class Timer {
+  constructor(x, y, r) {
+    this.x = x
+    this.y = y
+    this.r = r
+    this.current_r = 0
+  }
+
+  show() {
+    fill(cream)
+    stroke(black)
+    ellipse(this.x, this.y, this.current_r)
+  }
+
+  scale() {
+    if (this.current_r > this.r) return
+    this.current_r = this.current_r + 2
+  }
+}
+
 function preload() {
-  timers = loadJSON('/api/timers')
+  data = loadJSON('/api/timers')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
 
-  x = 0
-  y = height / 2
-  speedX = 4
-  speedY = 4
+  let i = 0
+
+  for (item in data) {
+    let x = width / Object.keys(data).length * i
+    let y = map(timeAsInt(data[item].started_time), 0, 2400, 0, height)
+    let r = data[item].hours * scale
+
+    timers.push(new Timer(x, y, r))
+
+    i = i + 1
+  }
 
   console.log(timers)
 }
 
 function draw() {
   background(orange)
-  fill(cream)
-  stroke(black)
-  ellipse(x, y, 50, 50)
-  x = x + speedX
-  y = y + speedY
 
-  if (x > width) speedX = -4
-  if (x < 0) speedX = 4
-
-  if (y > height) speedY = -4
-  if (y < 0) speedY = 4
+  timers.forEach((timer) => {
+    timer.show()
+    timer.scale()
+  })
 }
