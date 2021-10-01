@@ -16,7 +16,7 @@ router.get('/api/me', async (ctx, next) => {
 
 router.get('/api/timers', async (ctx, next) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
-  ctx.body = await harvest.time_entries.get({ user_id: 499142, limit: 100 })
+  ctx.body = await harvest.time_entries.get({ user_id: secrets.user_id, limit: secrets.timers_limit })
 })
 
 app.use(router.routes())
