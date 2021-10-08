@@ -9,14 +9,17 @@ const router = new Router()
 
 app.use(serve('./static'))
 
-router.get('/api/me', async (ctx, next) => {
+router.get('/api/me', async (ctx) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
   ctx.body = await harvest.users.me()
 })
 
-router.get('/api/timers', async (ctx, next) => {
+router.get('/api/timers/:user?/:limit?', async (ctx) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
-  ctx.body = await harvest.time_entries.get({ user_id: secrets.user_id, limit: secrets.timers_limit })
+  ctx.body = await harvest.time_entries.get({
+    user_id: ctx.params.user || secrets.user_id,
+    limit: ctx.params.limit || 100
+  })
 })
 
 app.use(router.routes())
