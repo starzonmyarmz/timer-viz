@@ -1,4 +1,4 @@
-// Cycles through Harvest timers one at a time by date across the x axis, the
+// Cycles through Harvest timers one at a time evenly across the x axis, the
 // timer start time on the y axis, and the radius of the circle corresponds to
 // the duration of the timer
 
@@ -10,7 +10,7 @@ const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
 const scale = 50
 
-let data, len, beg, end, span, i, x, y, r
+let data, increment, l, i, x, y, r
 
 // Motion Timing
 let t = 10
@@ -23,29 +23,26 @@ const timeAsInt = (time) => {
 }
 
 function preload() {
-  data = loadJSON('/api/timers/1098242/500')
+  data = loadJSON('/api/timers/1098242/100')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
 
-  len = Object.keys(data).length
+  l = Object.keys(data).length
+  increment = width / l
   i = 0
-
-  beg = dayjs(data[0].created_at)
-  end = dayjs(data[len - 1].created_at)
-  span = beg.diff(end, 'day')
 }
 
 function draw() {
   if (millis() > nextT) {
     nextT = millis() + t
 
-    x = map(beg.diff(data[i].created_at, 'day'), 0, span, 0, width)
+    x = increment * i
     y = map(timeAsInt(data[i].started_time), 0, 2400, 0, height)
     r = data[i].hours * scale
 
-    if (i < len - 1) {
+    if (i < l - 1) {
       i = i + 1
     } else {
       noLoop()

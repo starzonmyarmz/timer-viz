@@ -1,4 +1,4 @@
-// Plots Harvest timers evenly across the x axis, the timer start time on the y 
+// Plots Harvest timers evenly across the x axis, the timer start time on the y
 // axis, and the radius of the circle corresponds to the duration of the timer
 
 dayjs.extend(window.dayjs_plugin_customParseFormat)

@@ -1,4 +1,4 @@
-// Cycles through Harvest timers one at a time by date across the x axis, the
+// Cycles through Harvest timers one at a time evenly across the x axis, the
 // timer start time on the y axis, and the radius of the circle corresponds to
 // the duration of the timer
 
@@ -8,9 +8,9 @@ const body = document.body
 const cream = getComputedStyle(body).getPropertyValue('--cream')
 const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
-const scale = 50
+const scl = 200
 
-let data, len, beg, end, span, i, x, y, r
+let data, inc, len, i, x, y, r
 
 // Motion Timing
 let t = 10
@@ -23,27 +23,22 @@ const timeAsInt = (time) => {
 }
 
 function preload() {
-  data = loadJSON('/api/timers/1098242/500')
+  data = loadJSON('/api/timers/1098242/25')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
 
   len = Object.keys(data).length
+  inc = width / len
   i = 0
-
-  beg = dayjs(data[0].created_at)
-  end = dayjs(data[len - 1].created_at)
-  span = beg.diff(end, 'day')
 }
 
 function draw() {
   if (millis() > nextT) {
     nextT = millis() + t
 
-    x = map(beg.diff(data[i].created_at, 'day'), 0, span, 0, width)
-    y = map(timeAsInt(data[i].started_time), 0, 2400, 0, height)
-    r = data[i].hours * scale
+    r = data[i].hours * scl
 
     if (i < len - 1) {
       i = i + 1
@@ -54,5 +49,5 @@ function draw() {
 
   noFill()
   stroke(orange)
-  ellipse(x, y, r)
+  ellipse(width / 2, height / 2, r)
 }
