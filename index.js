@@ -1,6 +1,8 @@
 const Koa = require('koa')
 const Router = require('@koa/router')
 const serve = require('koa-static')
+const fs = require('fs')
+const HTMLParser = require('node-html-parser');
 const Harvest = require('node-harvest-api')
 const secrets = require('./secrets.json')
 
@@ -8,6 +10,32 @@ const app = new Koa()
 const router = new Router()
 
 app.use(serve('./static'))
+
+fs.readdir('./static/viz', (err, dirs) => {
+  if (err) return
+
+  let html = []
+  let file = './static/menu.html'
+
+  dirs.forEach((dir) => {
+    html.push(`<li><a href="/viz/${dir}">${dir}</a></li>`)
+  })
+
+  fs.readFile(file, 'utf8', (err, data) => {
+    let menu = HTMLParser.parse(data)
+    let ul = menu.querySelector('#menu-options')
+
+    ul.set_content(html.join(''))
+
+    const stream = fs.createWriteStream(file)
+
+    stream.once('open', () => {
+      stream.end(menu.toString())
+    })
+  })
+
+
+})
 
 router.get('/api/me', async (ctx) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
