@@ -1,7 +1,3 @@
-// Cycles through Harvest timers one at a time evenly across the x axis, the
-// timer start time on the y axis, and the radius of the circle corresponds to
-// the duration of the timer
-
 dayjs.extend(window.dayjs_plugin_customParseFormat)
 
 const body = document.body
@@ -10,10 +6,10 @@ const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
 const scl = 200
 
-let data, inc, len, i, x, y, r
+let data, len, i
 
 // Motion Timing
-let t = 10
+let t = 1
 let nextT = t
 
 // Returns standard time as military time
@@ -23,31 +19,51 @@ const timeAsInt = (time) => {
 }
 
 function preload() {
-  data = loadJSON('/api/timers/1098242/25')
+  // Karla
+  data = loadJSON('/api/timers/883666/25')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight)
 
   len = Object.keys(data).length
-  inc = width / len
   i = 0
+
+  curR = floor(data[i].hours * scl)
+  nextR = floor(data[i + 1].hours * scl)
+  diffR = abs(curR - nextR)
 }
+
+let curR, nextR, inc
 
 function draw() {
   if (millis() > nextT) {
     nextT = millis() + t
 
-    r = data[i].hours * scl
+    diffR = abs(curR - nextR)
 
-    if (i < len - 1) {
-      i = i + 1
+    if (diffR > 0) {
+      if (curR - nextR < 0) inc = 2
+      if (curR - nextR > 0) inc = -2
+      curR = curR + inc
     } else {
-      noLoop()
+      if (i < len - 1) {
+        i = i + 1
+        curR = floor(nextR)
+        nextR = floor(data[i].hours * scl)
+      } else {
+        i = 0
+        curR = floor(nextR)
+        nextR = floor(data[i].hours * scl)
+      }
     }
   }
 
-  noFill()
-  stroke(orange)
-  ellipse(width / 2, height / 2, r)
+  background(cream)
+  // noFill()
+  fill(orange)
+  // strokeWeight(1)
+  // stroke(black)
+  noStroke()
+  ellipse(width / 2, height / 2, curR)
 }

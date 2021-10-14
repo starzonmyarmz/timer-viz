@@ -33,8 +33,6 @@ fs.readdir('./static/viz', (err, dirs) => {
       stream.end(menu.toString())
     })
   })
-
-
 })
 
 router.get('/api/me', async (ctx) => {

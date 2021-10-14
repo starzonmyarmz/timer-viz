@@ -23,6 +23,7 @@ const timeAsInt = (time) => {
 }
 
 function preload() {
+  // Curran
   data = loadJSON('/api/timers/1098242/100')
 }
 

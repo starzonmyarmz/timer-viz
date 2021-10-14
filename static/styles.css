@@ -5,6 +5,7 @@
 }
 
 html, body {
+  font-family: sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -13,6 +14,23 @@ html, body {
   display: none !important;
 }
 
+#p5_loading {
+  display: grid !important;
+  place-items: center !important;
+  inset: 0 !important;
+  position: fixed !important;
+}
+
 .p5Canvas {
   display: block;
+}
+
+.desc {
+  background: var(--black);
+  color: var(--cream);
+  font-size: 14px;
+  padding: 8px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
