@@ -6,7 +6,7 @@ const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
 const scl = 200
 
-let data, len, i
+let data, len, i, s = 5
 
 // Motion Timing
 let t = 1
@@ -42,9 +42,9 @@ function draw() {
 
     diffR = abs(curR - nextR)
 
-    if (diffR > 0) {
-      if (curR - nextR < 0) inc = 2
-      if (curR - nextR > 0) inc = -2
+    if (diffR > s) {
+      if (curR - nextR < 0) inc = s
+      if (curR - nextR > 0) inc = -s
       curR = curR + inc
     } else {
       if (i < len - 1) {
