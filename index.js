@@ -17,7 +17,7 @@ fs.readdir('./static/viz', (err, dirs) => {
   let html = []
   let file = './static/menu.html'
 
-  dirs.forEach((dir) => {
+  dirs.sort((a, b) => { return a - b }).forEach((dir) => {
     html.push(`<li><a href="/viz/${dir}">${dir}</a></li>`)
   })
 
