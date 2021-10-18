@@ -4,11 +4,27 @@
     <title>Harvest Timer Visualization</title>
     <link rel="stylesheet" href="/styles.css">
     <style>
-      body {background: var(--cream)}
+      body {
+        background: var(--cream);
+      }
+      .deets {
+        background: var(--black);
+        color: var(--cream);
+        font-size: 14px;
+        line-height: 1;
+        padding: 8px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+      .deets:empty {
+        display: none;
+      }
     </style>
   </head>
 
   <body>
+    <div class="deets"></div>
     <div class="desc">Karla’s last 25 timers: x axis = evenly distributed, y axis = time, r = duration</div>
     <script src="/p5.min.js"></script>
     <script src="/dayjs.min.js"></script>

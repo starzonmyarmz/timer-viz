@@ -4,7 +4,8 @@ const body = document.body
 const cream = getComputedStyle(body).getPropertyValue('--cream')
 const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
-const scl = 200
+const deets = document.querySelector('.deets')
+const scl = 150
 
 let data, timers, i = 0
 let curX, nextX, incX
@@ -13,13 +14,18 @@ let curR, nextR, incR
 let speed = 5
 
 // Motion Timing
-let t = 1
+let t = 25
 let delay = t
 
 // Returns standard time as military time
 // Example: 2:00pm -> 1400
 const timeAsInt = (time) => {
   return dayjs(time, "h:mma").format('HHmm')
+}
+
+// Returns project/task/hours
+const projectDeets = (timer) => {
+  return `${timer.project.name} // ${timer.task.name} // ${timer.hours} hours`
 }
 
 function preload() {
@@ -43,6 +49,8 @@ function setup() {
   curR = data[i].hours * scl
   nextR = data[i + 1].hours * scl
   diffR = abs(floor(curR - nextR))
+
+  deets.innerHTML = projectDeets(data[i])
 }
 
 function draw() {
@@ -88,6 +96,8 @@ function draw() {
 
       curR = nextR
       nextR = data[i].hours * scl
+
+      deets.innerHTML = projectDeets(data[i])
     }
   }
 
