@@ -13,12 +13,14 @@ fetch('/api/timers/883666/10')
   .then((data) => {
     for (i in data) {
       html.push(`
-        <li style="width: ${data[i].hours * 300}px">
-          <div class="tab">${data[i].started_time}</div>
-          <div class="client">${data[i].client.name}</div>
-          <div class="project">${data[i].project.name}</div>
-          <div class="task">${data[i].task.name}</div>
-          <div class="duration"></div>
+        <li style="width: ${data[i].hours * 200}px">
+          <div class="tab">${militaryTime(data[i].started_time)}</div>
+          <div class="content">
+            <div class="client">${data[i].client.name}</div>
+            <div class="project">${data[i].project.name}</div>
+            <div class="task">${data[i].task.name}</div>
+            <div class="duration"></div>
+          </div>
         </li>
       `)
     }
@@ -28,6 +30,6 @@ fetch('/api/timers/883666/10')
 
 // Returns standard time as military time
 // Example: 2:00pm -> 1400
-const timeAsInt = (time) => {
-  return dayjs(time, "h:mma").format('HHmm')
+const militaryTime = (time) => {
+  return dayjs(time, "h:mma").format('HH:mm')
 }

@@ -4,7 +4,7 @@ const body = document.body
 const cream = getComputedStyle(body).getPropertyValue('--cream')
 const orange = getComputedStyle(body).getPropertyValue('--orange')
 const black = getComputedStyle(body).getPropertyValue('--black')
-const scale = 15
+const scale = 5
 
 let data, x, y, r
 let timers = []
@@ -16,7 +16,7 @@ const timeAsInt = (time) => {
 }
 
 function preload() {
-  data = loadJSON('/api/timers/883666/250')
+  data = loadJSON('/api/timers/883666/500')
 }
 
 function setup() {
@@ -52,7 +52,6 @@ function setup() {
     p--
 
     if (p == 0) {
-      console.log("protected!")
       break
     }
   }
@@ -63,7 +62,29 @@ function setup() {
 function draw() {
   background(black)
 
-  timers.forEach((t) => {
-    t.show()
-  })
+  for (let i = 0; i < timers.length; i++) {
+    timers[i].show()
+
+    let x = timers[i].x + random(-5, 5)
+    let y = timers[i].y + random(-5, 5)
+    let overlap = false
+
+    for (let j = 0; j < timers.length; j++) {
+      if (i == j) continue
+
+      let d = dist(x, y, timers[j].x, timers[j].y)
+
+      if (d < timers[i].r + timers[j].r) {
+        overlap = true
+        break
+      }
+    }
+
+    if (!overlap) {
+      timers[i].update(x, y)
+    }
+  }
+
+
+
 }
