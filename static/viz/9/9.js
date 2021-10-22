@@ -19,7 +19,7 @@ const timeAsInt = (time) => {
 }
 
 function preload() {
-  data = loadJSON('/api/timers/883666/250')
+  data = loadJSON('/api/timers/250/883666')
 }
 
 function setup() {

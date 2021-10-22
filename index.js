@@ -40,7 +40,7 @@ router.get('/api/me', async (ctx) => {
   ctx.body = await harvest.users.me()
 })
 
-router.get('/api/timers/:user?/:limit?', async (ctx) => {
+router.get('/api/timers/:limit?/:user?', async (ctx) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
   ctx.body = await harvest.time_entries.get({
     user_id: ctx.params.user || secrets.user_id,

@@ -8,7 +8,7 @@ const black = getComputedStyle(body).getPropertyValue('--black')
 const html = []
 const ul = document.querySelector('ul')
 
-fetch('/api/timers/883666/10')
+fetch('/api/timers/10/883666')
   .then(response => response.json())
   .then((data) => {
     for (i in data) {
