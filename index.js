@@ -11,6 +11,7 @@ const router = new Router()
 
 app.use(serve('./static'))
 
+// Generate Menu
 fs.readdir('./static/viz', (err, dirs) => {
   if (err) return
 
@@ -35,11 +36,13 @@ fs.readdir('./static/viz', (err, dirs) => {
   })
 })
 
+// Get /api/me
 router.get('/api/me', async (ctx) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
   ctx.body = await harvest.users.me()
 })
 
+// Get /api/timers
 router.get('/api/timers/:limit?/:user?', async (ctx) => {
   const harvest = new Harvest(secrets.account_id, secrets.token, secrets.app_name)
   ctx.body = await harvest.time_entries.get({
