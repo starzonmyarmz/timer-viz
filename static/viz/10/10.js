@@ -13,7 +13,7 @@ fetch('/api/timers/10/883666')
   .then((data) => {
     for (i in data) {
       html.push(`
-        <li style="width: ${data[i].hours * 200}px">
+        <li style="width: ${data[i].hours * 200}px" class="${data[i].task.id == 14906570 ? 'aura' : ''}">
           <div class="tab">${militaryTime(data[i].started_time)}</div>
           <div class="content">
             <div class="client">${data[i].client.name}</div>

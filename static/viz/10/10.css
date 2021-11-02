@@ -25,6 +25,13 @@ li {
   height: 100%;
 }
 
+.aura {
+  background-image: linear-gradient(var(--cream) 50%, #FEF9F300), url(aura.jpg);
+  background-position: 50% 175%;
+  background-size: 500%;
+  min-width: 296px;
+}
+
 .tab {
   border: 1px solid var(--orange);
   border-radius: 16px 0 16px 0;
